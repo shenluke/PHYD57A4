@@ -28,6 +28,46 @@ double find_max_abs(int n,double v[n]){
 void LU_solve(double A[N][N], double b[N], double x[N]){
     double L[N][N], U[N][N];
     double interchanger;
+    for(j=0; j<n; j++)
+    {
+        for(i=0; i<n; i++)
+        {
+            if(i<=j)
+            {
+                U[i][j]=A[i][j];
+                for(k=0; k<i-1; k++){
+                    U[i][j]-=L[i][k]*U[k][j];}
+                if(i==j){
+                    L[i][j]=1;}
+                else{
+                    L[i][j]=0;}
+            }
+            else
+            {
+                L[i][j]=A[i][j];
+                for(k=0; k<=j-1; k++){
+                    L[i][j]-=L[i][k]*U[k][j];}
+                L[i][j]/=U[j][j];
+                U[i][j]=0;}
+        }
+    }
+    for(i=0; i<n; i++)
+    {
+        Y[i]=B[i];
+        for(j=0; j<i; j++)
+        {
+            Y[i]-=L[i][j]*Y[j];
+        }
+    }
+    for(i=n-1; i>=0; i--)
+    {
+        X[i]= Y[i];
+        for(j=i+1; j<n; j++)
+        {
+            X[i]-=U[i][j]*X[j];
+        }
+        X[i]/=U[i][i];
+    }
 }
 
 void Lift_Force_Distribution(double Alpha[N], double Gamma[N], double chord[N], double dy_l, double dy_r, double L[N]){
