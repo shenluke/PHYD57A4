@@ -14,6 +14,7 @@ void cross(double a[3], double b[3],double output[3]){
     output[1]=a[2]*b[0]-a[0]*b[2];
     output[2]=a[0]*b[1]-a[1]*b[0];
 }
+
 double find_max_abs(int n,double v[n]){
     double max=abs(v[0]);
     for (int i=0;i<n-1;i++){
@@ -23,6 +24,7 @@ double find_max_abs(int n,double v[n]){
     }
     return max;
 }
+
 void LU_solve(double A[N][N], double b[N], double x[N]){
     double L[N][N], U[N][N];
     double interchanger;
@@ -49,6 +51,7 @@ int main(){
     double dz_l=-dy_l*3*PI/180;
     double dz_r=dy_r*3*PI/180;
     double dz_t=-dy_r*1*PI/180;
+    double dt;
     //Initialize LL BC
     for (int i=0;i<N/2;i++){
         BC[i][0]=;
@@ -58,9 +61,9 @@ int main(){
         LL[i][1]=;
         LL[i][2]=;
     }
-    for (int i=N/2;i<N;i++){
-    }
-    // Compute matrix A
+
+    // Compute matrix A, relative to the plane this should not change
+    
     //loop through steps 
     
 }
