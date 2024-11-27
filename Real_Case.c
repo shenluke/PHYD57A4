@@ -6,21 +6,25 @@
 #define N 1000
 #define PI 3.14159265389793
 #define rho 1.225
-#define Uinf
+#define Uinf 
 #define c1
-#define d1
-#define c2
-#define d2
-
+#define d1 
+#define c2 
+#define d2 
+#define c3 
+#define d3
+#define c4
 void cross(double a[3], double b[3],double output[3]){
     output[0]=a[1]*b[2]-a[2]*b[1];
     output[1]=a[2]*b[0]-a[0]*b[2];
     output[2]=a[0]*b[1]-a[1]*b[0];
 }
+void dot(double a[3], double b[3], double output){
+    output=a[0]*b[0]+a[1]*b[1]+a[2]*b[2];
+}
 
 void LU_solve(double A[N][N], double B[N], double X[N]){
     double L[N][N], U[N][N];
-    double interchanger;
     for(j=0; j<n; j++)
     {
         for(i=0; i<n; i++)
@@ -64,7 +68,8 @@ void LU_solve(double A[N][N], double B[N], double X[N]){
 }
 
 void Lift_Force_Distribution(double Alpha[N], double Gamma[N], double chord[N], double dy_l, double dy_r, double L[N]){
-
+//Use dF=CL(alpha(y))*dA=CL(alpha(y))*chord(y)*dy
+    
 }
 void Tau(double L[N], double CM[3], double LL[N][3],double Tau){
     double Tau=0;
@@ -81,17 +86,24 @@ void Tau(double L[N], double CM[3], double LL[N][3],double Tau){
 //w_i induced velocity
 void step(double Gamma, double dGamma[N], double Torque, double omega_x,double theta, double vz, double wi){
     //Calculate using 4th order symplectic method/Leapfrog
+    //Calculate lift force
+    //Calculate torque
+    //Update velocity and angular velocity
+    //Update position and angle theta
     
 }
 int main(){
     double CM[3];
-    CM[0];
+    CM[0]=;
     CM[1]=0;
-    CM[2];
+    CM[2]=;
     double BC[N][3];
     double LL[N][3];
     double chord[N],dGamma[N];
+    double tip_frac=0.02;
+    double cosb1,cosb2,cosbm,dp1,dp2,dpm;//m refer ti the middle point
     double vz=0;
+    double az,Tau;
     double LL_slope=tan(40*PI/180)+0.75*(tan(63*PI/180)-tan(40*PI/180));
     double BC_slope=tan(40*PI/180)+0.25*(tan(63*PI/180)-tan(40*PI/180));//Slope refer to dx/dy
     double theta=0;
@@ -103,22 +115,30 @@ int main(){
     //Small Angle approximation
     double dz_r=dy_r*3*PI/180;
     double dz_t=-dy_r*1*PI/180;
-    double dt;
-    //Initialize LL BC
-    for (int i=0;i<N/2;i++){
-        BC[i][0]=;
-        BC[i][1]=;
-        BC[i][2]=;
-        LL[i][0]=;
-        LL[i][1]=;
-        LL[i][2]=;
+    double dt=0.01;
+    double ;
+    //Initialize LL BC for the undamaged wing
+    for (int i=0;i<tip_frac*N;i++){
+        BC[N-i-1][0]=;
+        BC[N-i-1][1]=;
+        BC[N-i-1][2]=i*dz_t+0.5*dz_t;
+        LL[N-i-1][0]=;
+        LL[N-i-1[1]=;
+        LL[N-i-1][2]=i*dz_t;
     }
-
+    for (int i=tip_frac;i<N/2;i++){
+        BC[N-i-1][0]=i*dx_r;
+        BC[N-i-1][1]=i*dy_r+0.5*dy_r;
+        BC[N-i-1][2]=i*dz_t+0.5*dz_t;
+        LL[N-i-1][0]=i*dx_r;
+        LL[N-i-1][1]=i*dy_r;
+        LL[N-i-1][2]=i*dz_t;
+    }
+    for (int i=)
     // Compute matrix A, relative to the plane this should not change
     
     //loop through steps 
     for (int iter=0;iter<end;iter++){
-        Tau();//Initial torque
         step();//4th order symplectic
     }
 }
