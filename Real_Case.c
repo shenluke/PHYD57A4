@@ -109,34 +109,46 @@ int main(){
     double theta=0;
     double omega_x=0;
     double dx_l,dy_l,dz_l,dx_r,dy_r,dz_r,dz_t;
-    double dy_l=2*(13.05-3.35/2)/N;
-    double dy_r=2*(18.75-3.35/2)/N;
+    double dy_l=2*(13.05)/N;
+    double dy_r=2*(18.75)/N;
     double dz_l=-dy_l*3*PI/180;
     //Small Angle approximation
     double dz_r=dy_r*3*PI/180;
     double dz_t=-dy_r*1*PI/180;
     double dt=0.01;
-    double ;
+
     //Initialize LL BC for the undamaged wing
     for (int i=0;i<tip_frac*N;i++){
-        BC[N-i-1][0]=;
-        BC[N-i-1][1]=;
+        BC[N-i-1][0]=(i+0.5)*dx_r;
+        BC[N-i-1][1]=wing_span/2-(i+0.50)*dy_r;
         BC[N-i-1][2]=i*dz_t+0.5*dz_t;
-        LL[N-i-1][0]=;
-        LL[N-i-1[1]=;
+        LL[N-i-1][0]=(i+1)*dx_r;
+        LL[N-i-1][1]=wing_span/2-(i+1)*dy_r;
         LL[N-i-1][2]=i*dz_t;
     }
-    for (int i=tip_frac;i<N/2;i++){
-        BC[N-i-1][0]=i*dx_r;
-        BC[N-i-1][1]=i*dy_r+0.5*dy_r;
-        BC[N-i-1][2]=i*dz_t+0.5*dz_t;
-        LL[N-i-1][0]=i*dx_r;
-        LL[N-i-1][1]=i*dy_r;
-        LL[N-i-1][2]=i*dz_t;
+    for (int i=tip_frac*N;i<N/2;i++){
+        BC[N-i-1][0]=(i+0.5)*dx_r;
+        BC[N-i-1][1]=wing_span/2-(i+0.50)*dy_r;
+        BC[N-i-1][2]=BC[N-tip_frac*N-2][2]+(i-tip_frac*N)*dz_r;
+        LL[N-i-1][0]=(i+1)*dx_r;
+        LL[N-i-1][1]=wing_span/2-(i+1)*dy_r;
+        LL[N-i-1][2]=LL[N-tip_frac*N-2][2]+(i-tip_frac*N)*dz_r;
     }
-    for (int i=)
+    //Points for damaged wing
+    for (int i=N/2;i<N;i++){
+        BC[N-i-1][0]=BC[N/2][0]+(i-N/2+1)*dx_l;
+        BC[N-i-1][1]=BC[N/2][1]+(i-N/2+1)*dy_l;
+        BC[N-i-1][2]=BC[N/2][2]+(i-N/2+1)*dz_l;
+        LL[N-i-1][0]=BC[N/2][0]+(i-N/2+1)*dx_l;
+        LL[N-i-1][1]=BC[N/2][1]+(i-N/2+1)*dy_l;
+        LL[N-i-1][2]=BC[N/2][2]+(i-N/2+1)*dz_l;
+    }
     // Compute matrix A, relative to the plane this should not change
-    
+    for (int i=0;i<N;i++){
+        for (int j=0;j<N;j++){
+
+        }
+    }
     //loop through steps 
     for (int iter=0;iter<end;iter++){
         step();//4th order symplectic
